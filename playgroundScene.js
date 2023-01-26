@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <script src="dist/phaser.js"></script>
-    <head></head>
-    <body>
-        <script type="text/javascript">
-            const { Phaser } = require("./dist/phaser");
+const { Phaser } = require("./dist/phaser");
 
 var config = {
-    type: Phaser.WEBGL,
+    type: Phaser.AUTO,
     width: 1920,
     height: 1080,
     scene: {
@@ -34,7 +28,3 @@ function create ()
 function update ()
 {
 }
-
-        </script>
-    </body>
-</html>

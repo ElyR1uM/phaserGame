@@ -1,0 +1,5 @@
+Tilemap Tilesize: 16x
+Item size: 16x
+Playable Area: 208x96
+-> In Tiles: 13x6
+UIAspectRatio: 16:9
