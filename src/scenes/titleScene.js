@@ -8,7 +8,7 @@ class titleScene extends Phaser.Scene {
     }
 
     create () {
-        let background = this.add.sprite(0, 0, 'bg').setOrigin(0);
+        let background = this.add.image(0, 0, 'bg').setOrigin(0);
     }
 }
 
