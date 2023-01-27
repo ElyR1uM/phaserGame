@@ -1,0 +1,49 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "dbnF1.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "Pathway1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 5.5
+        },
+        "Planks.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 8
+        },
+        "dbnF1.tmx": {
+            "scale": 5.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 191.36363636363637,
+                "y": -251.0909090909091
+            }
+        }
+    },
+    "last.imagePath": "C:/Users/nick.pepper/Desktop/phaser/assets/exported-images",
+    "map.fixedSize": false,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "Planks.tsx",
+        "dbnF1.tmx"
+    ],
+    "project": "dbnbuilding.tiled-project",
+    "recentFiles": [
+        "Planks.tsx",
+        "dbnF1.tmx",
+        "Pathway1.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
