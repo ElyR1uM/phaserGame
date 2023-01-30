@@ -14,7 +14,7 @@ class titleSceneClass extends Phaser.Scene {
         //let background = this.add.image(0, 0, 'bg').setOrigin(0);
         //background.setScale(10); // If the resolution is set to 1920x1080px (FHD) then setScale(7.5), if set to 2560x1440 (2K QHD) then setScale(10)
 
-        let map = this.make.tilemap({ key: 'map' });
+        const map = this.make.tilemap({ key: 'map' });
         let terrain = map.addTilesetImage('planks', 'tiles');
         let layers = map.createLayer(0, terrain, 0, 0);
     }
