@@ -2,4 +2,5 @@ body {
     margin-top: auto;
     display: flex;
     justify-content: center;
+    background-color: rgb(33, 50, 65);
 }

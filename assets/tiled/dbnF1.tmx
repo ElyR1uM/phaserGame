@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="1" nextlayerid="3" nextobjectid="1">
  <editorsettings>
-  <export target="../exported-tilemaps/dbnF1..tmx" format="tmx"/>
+  <export target="../exported-tilemaps/dbnF1.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" source="Planks.tsx"/>
- <layer id="1" name="Layout" width="30" height="20" offsetx="68.3636" offsety="-64.9091">
+ <tileset firstgid="1" name="Planks" tilewidth="16" tileheight="16" tilecount="81" columns="9">
+  <image source="../exported-images/cPathTiles.png" width="144" height="144"/>
+ </tileset>
+ <layer id="1" name="ground" width="30" height="20" offsetx="68.3636" offsety="-64.9091">
   <data encoding="csv">
    <chunk x="-48" y="-16" width="16" height="16">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

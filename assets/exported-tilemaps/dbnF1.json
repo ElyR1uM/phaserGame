@@ -248,7 +248,7 @@
                 }],
          "height":48,
          "id":1,
-         "name":"Layout",
+         "name":"ground",
          "offsetx":68.3636,
          "offsety":-64.9091,
          "opacity":1,
@@ -268,8 +268,17 @@
  "tileheight":16,
  "tilesets":[
         {
+         "columns":9,
          "firstgid":1,
-         "source":"..\/tiled\/Planks.tsx"
+         "image":"..\/exported-images\/cPathTiles.png",
+         "imageheight":144,
+         "imagewidth":144,
+         "margin":0,
+         "name":"Planks",
+         "spacing":0,
+         "tilecount":81,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",

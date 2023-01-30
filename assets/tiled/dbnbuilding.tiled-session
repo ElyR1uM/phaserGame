@@ -9,24 +9,40 @@
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "": {
+            "scaleInDock": 8,
+            "scaleInEditor": 11
+        },
         "Pathway1.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 5.5
         },
         "Planks.tsx": {
-            "scaleInDock": 2,
+            "dynamicWrapping": true,
+            "scaleInDock": 5.5,
             "scaleInEditor": 8
         },
         "dbnF1.tmx": {
-            "scale": 5.5,
+            "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 191.36363636363637,
-                "y": -251.0909090909091
+                "x": 188.66666666666674,
+                "y": -366.66666666666674
             }
+        },
+        "dbnF1.tmx#Planks": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tileset.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 4,
+            "scaleInEditor": 1
         }
     },
     "last.exportedFilePath": "C:/Users/nick.pepper/Desktop/phaser/assets/exported-tilemaps",
+    "last.externalTilesetPath": "C:/Users/nick.pepper/Desktop/phaser/assets/tiled",
     "last.imagePath": "C:/Users/nick.pepper/Desktop/phaser/assets/exported-images",
     "map.fixedSize": false,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
@@ -34,15 +50,17 @@
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "openFiles": [
-        "Planks.tsx",
-        "dbnF1.tmx"
+        "dbnF1.tmx",
+        "tileset.tsx"
     ],
     "project": "dbnbuilding.tiled-project",
     "recentFiles": [
         "Planks.tsx",
+        "tileset.tsx",
         "dbnF1.tmx",
         "Pathway1.tsx"
     ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 16,
