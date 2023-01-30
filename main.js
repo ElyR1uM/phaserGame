@@ -14,7 +14,7 @@ class titleSceneClass extends Phaser.Scene {
     preload() {
         this.load.image('bg', './assets/exported-images/backgroundCave.png');
         this.load.image('tilemap', './assets/exported-images/cPathTiles.png'); //Load resources for the tilemap JSON (Definetly load before dbnF1.json)
-        this.load.tilemaptiledJSON('floor-one', './assets/exported-tilemaps/dbnF1.json'); //Load the tilemap
+        this.load.tilemapTiledJSON('floor-one', './assets/exported-tilemaps/dbnF1.json'); //Load the tilemap
     }
 
     create () {
