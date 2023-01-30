@@ -26,8 +26,10 @@
             }
         }
     },
+    "last.exportedFilePath": "C:/Users/nick.pepper/Desktop/phaser/assets/exported-tilemaps",
     "last.imagePath": "C:/Users/nick.pepper/Desktop/phaser/assets/exported-images",
     "map.fixedSize": false,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
