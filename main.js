@@ -15,8 +15,8 @@ class titleSceneClass extends Phaser.Scene {
         const map = this.make.tilemap({ key: 'map' });
         const Player = map.addTilesetImage('Player', 'playerTiles')
         const Planks = map.addTilesetImage('Planks', 'plankTiles'); //                           As a String                                     Not a string (duh)
-        const groundLayer = map.createLayer('ground', Planks, 0, 0).setScale(5); //Layer Order is: '<What you called your layer in Tiled/The JSON>', <what you just defined as the TilesetImage (const Planks in line 18), 0, 0 (Coordinate Offset)
-        const playerLayer = map.createLayer('player')
+        const groundLayer = map.createLayer('ground', Planks, 0, 0).setScale(5); //createLayer Order is: '<What you called your layer in Tiled/The JSON>', <what you just defined as the TilesetImage (const Planks in line 18), 0, 0 (Coordinate Offset)
+        const playerLayer = map.createLayer('player', Player, 0, 0).setScale(5);
 
 
         const overlay = this.add.image(0, 0, 'bg').setOrigin(0);
