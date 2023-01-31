@@ -36,7 +36,8 @@
             "scaleInEditor": 1
         },
         "dbnF1.tmx#Player": {
-            "dynamicWrapping": false
+            "dynamicWrapping": false,
+            "scaleInEditor": 1
         },
         "tileset.tsx": {
             "dynamicWrapping": false,

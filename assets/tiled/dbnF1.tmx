@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="76" height="33" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="76" height="33" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="1">
  <editorsettings>
   <export target="../exported-tilemaps/dbnF1.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Planks" tilewidth="16" tileheight="16" tilecount="81" columns="9">
-  <image source="../exported-images/cPathTiles.png" width="144" height="144"/>
+  <image source="../exported-images/plankTiles.png" width="144" height="144"/>
  </tileset>
  <tileset firstgid="82" name="Player" tilewidth="16" tileheight="16" tilecount="1" columns="1">
-  <image source="../exported-images/playerModel.png" width="16" height="16"/>
+  <image source="../exported-images/player.png" width="16" height="16"/>
  </tileset>
  <layer id="1" name="ground" width="76" height="33">
   <data encoding="csv">
