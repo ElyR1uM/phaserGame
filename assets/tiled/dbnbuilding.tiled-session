@@ -23,17 +23,20 @@
             "scaleInEditor": 8
         },
         "dbnF1.tmx": {
-            "scale": 0.75,
+            "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 188.66666666666674,
-                "y": -366.66666666666674
+                "x": 156.33333333333337,
+                "y": -17
             }
         },
         "dbnF1.tmx#Planks": {
             "dynamicWrapping": false,
-            "scaleInDock": 1,
+            "scaleInDock": 3,
             "scaleInEditor": 1
+        },
+        "dbnF1.tmx#Player": {
+            "dynamicWrapping": false
         },
         "tileset.tsx": {
             "dynamicWrapping": false,
@@ -51,15 +54,16 @@
     "map.tileWidth": 16,
     "openFiles": [
         "dbnF1.tmx",
-        "tileset.tsx"
+        "Planks.tsx"
     ],
     "project": "dbnbuilding.tiled-project",
     "recentFiles": [
         "Planks.tsx",
-        "tileset.tsx",
         "dbnF1.tmx",
+        "tileset.tsx",
         "Pathway1.tsx"
     ],
+    "tileset.embedInMap": true,
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

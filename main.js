@@ -11,12 +11,12 @@ class titleSceneClass extends Phaser.Scene {
     }
 
     create () {
-        //let background = this.add.image(0, 0, 'bg').setOrigin(0);
-        //background.setScale(10); // If the resolution is set to 1920x1080px (FHD) then setScale(7.5), if set to 2560x1440 (2K QHD) then setScale(10)
-
         const map = this.make.tilemap({ key: 'map' });
-        let terrain = map.addTilesetImage('planks', 'tiles');
-        let layers = map.createLayer(0, terrain, 0, 0);
+        const Planks = map.addTilesetImage('Planks', 'tiles'); //                           As a String                                     Not a string (duh)
+        const layers = map.createLayer('ground', Planks, 0, 0).setScale(5); //Layer Order is: '<What you called your layer in Tiled/The JSON>', <what you just defined as the TilesetImage (const Planks in line 18), 0, 0 (Coordinate Offset)
+
+        //const overlay = this.add.image(0, 0, 'bg').setOrigin(0);
+        //overlay.setScale(10); // If the resolution is set to 1920x1080px (FHD) then setScale(7.5), if set to 2560x1440 (2K QHD) then setScale(10)
     }
 }
 
@@ -24,7 +24,7 @@ let config = {
     type: Phaser.WEBGL,
     width: 2560,
     height: 1440,
-    backgroundColor: 'rgb(155, 16, 30)',
+    backgroundColor: '#000021',
     pixelArt: true, // Definetly never delete this, Upscaling an image so much with pixel interpolation enabled costs resources and looks horrifying
     scene: {
         preload: titleSceneClass.preload,
