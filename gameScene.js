@@ -1,6 +1,6 @@
-class titleSceneClass extends Phaser.Scene {
+export default class gameSceneClass extends Phaser.Scene {
     constructor() {
-        super({key: 'titleScene'});
+        super({key: 'gameScene'});
     }
     preload () { // Preload is called before startup
         this.load.image('bg', 'assets/exported-images/backgroundCave.png'); // For further calculations relative to the game resolution: original image dimensions are 256x144 (10th of 2K)
@@ -11,7 +11,6 @@ class titleSceneClass extends Phaser.Scene {
 
     create () { // Create is called on game startup
         // Variables
-        let cursors;
         let scale = 5;
         let playerBody = matter.Body;
         // Player Velocity
@@ -45,34 +44,3 @@ class titleSceneClass extends Phaser.Scene {
         this.inputHandler();
     }
 }
-
-const config = {
-    type: Phaser.WEBGL,
-    width: 2560,
-    height: 1440,
-    backgroundColor: '#000021',
-    pixelArt: true, // Definetly never delete this, Upscaling an image so much with pixel interpolation enabled costs resources and looks horrifying
-    scene: {
-        preload: titleSceneClass.preload,
-        create: titleSceneClass.create,
-        update: titleSceneClass.update
-    },
-    physics: {
-        default: 'matter', //Allows rigidbodies etc that might be useful is I get to implement combat like in Undertale or jsab
-        matter: {
-            enableSleeping: true,
-            gravity: {
-                y: 0
-            },
-            debug: {
-                showBody: true,
-                showStaticBody: true
-            }
-        }
-    }
-};
-
-let titleScene = new titleSceneClass();
-let game = new Phaser.Game(config);
-game.scene.add('titleScene', titleScene);
-game.scene.start('titleScene');
