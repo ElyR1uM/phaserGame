@@ -48,8 +48,10 @@ function create () { // Create is called on game startup
       const layer = map.createLayer(i, Planks, 0, 0).setScale(scale)
       layer.setDepth(i);
     }
-    playerChar = this.add.sprite(104 * scale, 72 * scale, 'playerFrames')/*.setOrigin(0)*/.setScale(scale); // How to translate the 16x16 grid of the tilemap into the WQHD Canvas of the game: (N - .5, -1 if you have setOrigin to 0) Tiles times the scale var.
+    playerChar = this.add.sprite(0, 0, 'playerFrames').setScale(scale);
     playerChar.setDepth(2);
+    this.cameras.main.startFollow(playerChar, true);
+    this.cameras.main.setFollowOffset(-playerChar.width, -playerChar.height);
     //playerChar.setColliderWorldBounds(true);
     //const overlay = this.add.image(0, 0, 'bg').setOrigin(0); // Insert last to render above all
     //overlay.setScale(10); // If the resolution is set to 1920x1080px (FHD) then setScale(7.5), if set to 2560x1440 (2K QHD) then setScale(10)
@@ -58,7 +60,7 @@ function create () { // Create is called on game startup
           {
             id: 'player',
             sprite: playerChar,
-            startPosition: { x: 104 * scale, y: 72 * scale },
+            startPosition: { x: 6, y: 4 },
           },
         ],
     }
@@ -66,17 +68,8 @@ function create () { // Create is called on game startup
     this.gridEngine.create(map, gridEngineConfig);
 }
 
-function inputHandler () {
+/*function inputHandler () {
     if (cursors.left.isDown) {
-      this.gridEngine.move('player', 'left');
-    } else if (cursors.right.isDown) {
-      this.gridEngine.move('player', 'right');
-    } else if (cursors.up.isDown) {
-      this.gridEngine.move('player', 'up');
-    } else if (cursors.down.isDown) {
-      this.gridEngine.move('player', 'down');
-    }
-    /*if (cursors.left.isDown) {
         playerChar.setVelocityX(-200);
     } 
     if (cursors.right.isDown) {
@@ -93,11 +86,20 @@ function inputHandler () {
     }
     if (!cursors.up.isDown && !cursors.down.isDown || cursors.up.isDown && cursors.down.isDown) {
         playerChar.setVelocityY(0);
-    }*/
-}
+    }
+}*/
 
 function update () { // Update is called once per frame, wonder if fixedUpdate is also a thing here
-    inputHandler();
+    //inputHandler();
+    if (cursors.left.isDown) {
+      this.gridEngine.move('player', 'left');
+    } else if (cursors.right.isDown) {
+      this.gridEngine.move('player', 'right');
+    } else if (cursors.up.isDown) {
+      this.gridEngine.move('player', 'up');
+    } else if (cursors.down.isDown) {
+      this.gridEngine.move('player', 'down');
+    }
 }
 
 
