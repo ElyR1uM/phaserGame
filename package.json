@@ -98,6 +98,7 @@
   },
   "dependencies": {
     "eventemitter3": "^5.0.0",
+    "grid-engine": "^2.25.0",
     "matter-js": "^0.18.0"
   }
 }
