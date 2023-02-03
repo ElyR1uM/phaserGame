@@ -70,9 +70,8 @@ function create () { // Create is called on game startup
           },
         ],
     }
-
     this.gridEngine.create(map, gridEngineConfig);
-  }
+}
 
 function update () { // Update is called once per frame, wonder if fixedUpdate is also a thing here
     //inputHandler();
