@@ -26,7 +26,7 @@ const config = {
 //let cursors;
 let playerChar;
 let scale = 5;
-let cursors;
+let keys;
 
 function preload () { // Preload is called before startup
     this.load.image('bg', 'assets/exported-images/backgroundCave.png'); // For further calculations relative to the game resolution: original image dimensions are 256x144 (10th of 2K)
@@ -39,7 +39,7 @@ function preload () { // Preload is called before startup
 function create () { // Create is called on game startup
     // Variables
 
-    cursors = this.input.keyboard.createCursorKeys();
+    keys = this.input.keyboard.addKeys('W, A, S, D, E');
     
     
     // Create all visible stuff (Map, Player, etc)
@@ -55,10 +55,8 @@ function create () { // Create is called on game startup
     this.cameras.main.setFollowOffset(-playerChar.width, -playerChar.height);
     const npcSprite = this.add.sprite(0, 0, "npcFrames").setScale(scale);
     //playerChar.setColliderWorldBounds(true);
-    //const overlay = this.add.image(0, 0, 'bg').setOrigin(0); // Insert last to render above all
-    //overlay.setScale(10); // If the resolution is set to 1920x1080px (FHD) then setScale(7.5), if set to 2560x1440 (2K QHD) then setScale(10)
     const gridEngineConfig = {
-        characters: [
+      characters: [
           {
             id: 'player',
             sprite: playerChar,
@@ -74,18 +72,21 @@ function create () { // Create is called on game startup
     }
 
     this.gridEngine.create(map, gridEngineConfig);
-}
+  }
 
 function update () { // Update is called once per frame, wonder if fixedUpdate is also a thing here
     //inputHandler();
-    if (cursors.left.isDown) {
+    if (keys.A.isDown) {
       this.gridEngine.move('player', 'left');
-    } else if (cursors.right.isDown) {
+    } else if (keys.D.isDown) {
       this.gridEngine.move('player', 'right');
-    } else if (cursors.up.isDown) {
+    } else if (keys.W.isDown) {
       this.gridEngine.move('player', 'up');
-    } else if (cursors.down.isDown) {
+    } else if (keys.S.isDown) {
       this.gridEngine.move('player', 'down');
+    }
+    if (keys.E.isDown) {
+      this.gridEngine.moveRandomly('npc0');
     }
 }
 
