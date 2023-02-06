@@ -30,6 +30,7 @@ let keys;
 
 function preload () { // Preload is called before startup
     this.load.image('bg', 'assets/exported-images/backgroundCave.png'); // For further calculations relative to the game resolution: original image dimensions are 256x144 (10th of 2K)
+    this.load.image('dialogue', 'assets/exported-images/dialogueBox0.png')
     this.load.image('plankTiles', 'assets/exported-images/plankTiles.png'); //Load resources for the tilemap JSON (Definetly load before dbnF1.json)
     this.load.spritesheet('playerFrames', 'assets/exported-images/player.png', {frameWidth: 16, frameHeight: 16});
     this.load.spritesheet('npcFrames', 'assets/exported-images/npc0.png', {frameWidth: 16, frameHeight: 16});
@@ -39,7 +40,7 @@ function preload () { // Preload is called before startup
 function create () { // Create is called on game startup
     // Variables
 
-    keys = this.input.keyboard.addKeys('W, A, S, D, E');
+    keys = this.input.keyboard.addKeys('W, A, S, D, E, R');
     
     
     // Create all visible stuff (Map, Player, etc)
@@ -64,9 +65,10 @@ function create () { // Create is called on game startup
             speed: 8,
           },
           {
-            id: "npc0",
+            id: 'npc0',
             sprite: npcSprite,
             startPosition: { x: 39, y: 7 },
+            speed: 5,
           },
         ],
     }
@@ -85,11 +87,19 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
       this.gridEngine.move('player', 'down');
     }
     if (keys.E.isDown) {
-      this.gridEngine.moveRandomly('npc0');
+        this.gridEngine.follow('npc0', 'player', 0, true);
     }
+    if (keys.R.isDown) {
+      this.scene.restart();
+    }
+    //If player collides with npc, remove all chars
+    let playerFacePos;
+    let npc0Pos;
+    playerFacePos = this.gridEngine.getFacingPosition('npc0');
+    npc0Pos = this.gridEngine.getPosition('player');
+    if (playerFacePos.x == npc0Pos.x && playerFacePos.y == npc0Pos.y) {this.scene.restart();}
+    //console.log(playerFacePos, npc0Pos)
 }
-
-
 
 let game = new Phaser.Game(config);
 
