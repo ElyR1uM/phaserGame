@@ -63,12 +63,18 @@ function create () { // Create is called on game startup
             sprite: playerChar,
             startPosition: { x: 31, y: 18 },
             speed: 8,
+            collides:{
+              collisionGroups: ['cg1'],
+            }
           },
           {
             id: 'npc0',
             sprite: npcSprite,
             startPosition: { x: 39, y: 7 },
             speed: 5,
+            collides: {
+              collisionGroups: ['cg2']
+            },
           },
         ],
     }
@@ -87,19 +93,18 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
       this.gridEngine.move('player', 'down');
     }
     if (keys.E.isDown) {
-        this.gridEngine.follow('npc0', 'player', 0, true);
+        this.gridEngine.follow('npc0', 'player', -1, true);
     }
     if (keys.R.isDown) {
       this.scene.restart();
     }
     //If player collides with npc, remove all chars
-    let playerFacePos;
+    let playerPos;
     let npc0Pos;
-    playerFacePos = this.gridEngine.getFacingPosition('npc0');
-    npc0Pos = this.gridEngine.getPosition('player');
-    if (playerFacePos.x == npc0Pos.x && playerFacePos.y == npc0Pos.y) {this.scene.restart();}
+    npc0Pos = this.gridEngine.getPosition('npc0');
+    playerPos = this.gridEngine.getPosition('player');
+    if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) {this.scene.restart();}
     //console.log(playerFacePos, npc0Pos)
 }
 
 let game = new Phaser.Game(config);
-
