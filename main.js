@@ -71,7 +71,7 @@ function create () { // Create is called on game startup
             id: 'npc0',
             sprite: npcSprite,
             startPosition: { x: 39, y: 7 },
-            speed: 5,
+            speed: 6,
             collides: {
               collisionGroups: ['cg2']
             },
