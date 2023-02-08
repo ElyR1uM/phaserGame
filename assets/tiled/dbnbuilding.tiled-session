@@ -23,11 +23,11 @@
             "scaleInEditor": 5.5
         },
         "dbnF1.tmx": {
-            "scale": 2,
-            "selectedLayer": 3,
+            "scale": 5.5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 611.25,
-                "y": 13.5
+                "x": 582.2727272727273,
+                "y": 222.9090909090909
             }
         },
         "dbnF1.tmx#Planks": {

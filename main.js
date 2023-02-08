@@ -25,8 +25,19 @@ const config = {
 
 //let cursors;
 let playerChar;
+let npcSprite;
+let coinSpr;
 let scale = 5;
 let keys;
+const coinStore = [
+  {
+    x: 29,
+    y: 13  
+  },
+]
+let x;
+let y;
+let map;
 
 function preload () { // Preload is called before startup
     this.load.image('bg', 'assets/exported-images/backgroundCave.png'); // For further calculations relative to the game resolution: original image dimensions are 256x144 (10th of 2K)
@@ -34,6 +45,7 @@ function preload () { // Preload is called before startup
     this.load.image('plankTiles', 'assets/exported-images/plankTiles.png'); //Load resources for the tilemap JSON (Definetly load before dbnF1.json)
     this.load.spritesheet('playerFrames', 'assets/exported-images/player.png', {frameWidth: 16, frameHeight: 16});
     this.load.spritesheet('npcFrames', 'assets/exported-images/npc0.png', {frameWidth: 16, frameHeight: 16});
+    this.load.spritesheet('coinFrames', 'assets/exported-images/coin.png', {frameWidth: 16, frameHeight: 16});
     this.load.tilemapTiledJSON('map', 'assets/exported-tilemaps/dbnF1.json'); //Load the tilemap
 }
 
@@ -44,7 +56,7 @@ function create () { // Create is called on game startup
     
     
     // Create all visible stuff (Map, Player, etc)
-    const map = this.make.tilemap({ key: 'map' });
+    map = this.make.tilemap({ key: 'map' });
     const Planks = map.addTilesetImage('Planks', 'plankTiles');
     for (let i = 0; i < map.layers.length; i++) {
       const layer = map.createLayer(i, Planks, 0, 0).setScale(scale);
@@ -54,14 +66,18 @@ function create () { // Create is called on game startup
     playerChar.setDepth(2);
     this.cameras.main.startFollow(playerChar, true);
     this.cameras.main.setFollowOffset(-playerChar.width, -playerChar.height);
-    const npcSprite = this.add.sprite(0, 0, "npcFrames").setScale(scale);
+    npcSprite = this.add.sprite(0, 0, "npcFrames").setScale(scale);
     //playerChar.setColliderWorldBounds(true);
+    const entities = {
+      player: {x: 31, y: 18},
+      npc0: {x: 39, y: 7 }
+    }
     const gridEngineConfig = {
       characters: [
           {
             id: 'player',
             sprite: playerChar,
-            startPosition: { x: 31, y: 18 },
+            startPosition: {x: entities.player.x, y: entities.player.y},
             speed: 8,
             collides:{
               collisionGroups: ['cg1'],
@@ -78,11 +94,24 @@ function create () { // Create is called on game startup
           },
         ],
     }
+    x = coinStore[0].x;
+    y = coinStore[0].y;
+    console.log(map.getObjectLayer('coins')['objects'].length)
+      for (let coins = 0; coins < map.getObjectLayer('coins')['objects'].length; coins++) {
+      coinSpr = this.add.sprite(0, 0, 'coinFrames');
+      coinSpr.scale = scale;
+     gridEngineConfig.characters.push({
+        id: `coin${x}#${y}`,
+        sprite: coinSpr,
+        startPosition: { x, y },
+      })}
+    
+    console.log(gridEngineConfig)
     this.gridEngine.create(map, gridEngineConfig);
+    
 }
 
 function update () { // Update is called once per frame, wonder if fixedUpdate is also a thing here
-    //inputHandler();
     if (keys.A.isDown) {
       this.gridEngine.move('player', 'left');
     } else if (keys.D.isDown) {
@@ -98,13 +127,17 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
     if (keys.R.isDown) {
       this.scene.restart();
     }
-    //If player collides with npc, remove all chars
     let playerPos;
     let npc0Pos;
+    let coin = coinStore[0]
     npc0Pos = this.gridEngine.getPosition('npc0');
     playerPos = this.gridEngine.getPosition('player');
     if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) {this.scene.restart();}
-    //console.log(playerFacePos, npc0Pos)
+    if (playerPos.x == coin.x && playerPos.y == coin.y) {
+      coinSpr.visible = false;
+      console.log('after ', this.gridEngine)
+      console.log('Collected!', coin);
+    }
 }
 
 let game = new Phaser.Game(config);
