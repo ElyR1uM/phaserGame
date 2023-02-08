@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="76" height="33" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="51">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="76" height="33" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="54">
  <editorsettings>
   <export target="../exported-tilemaps/dbnF1.json" format="json"/>
  </editorsettings>
@@ -289,5 +289,6 @@
     <property name="isCollected" type="bool" value="false"/>
    </properties>
   </object>
+  <object id="52" gid="223" x="304" y="224" width="16" height="16"/>
  </objectgroup>
 </map>

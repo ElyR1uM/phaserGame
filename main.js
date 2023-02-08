@@ -30,11 +30,10 @@ let coinSpr;
 let scale = 5;
 let keys;
 const coinStore = [
-  {
-    x: 29,
-    y: 13  
-  },
+  {x: 29, y: 13},
+  {x: 19, y: 13}
 ]
+let coinCounter;
 let x;
 let y;
 let map;
@@ -86,7 +85,7 @@ function create () { // Create is called on game startup
           {
             id: 'npc0',
             sprite: npcSprite,
-            startPosition: { x: 39, y: 7 },
+            startPosition: { x: entities.npc0.x, y: entities.npc0.y },
             speed: 6,
             collides: {
               collisionGroups: ['cg2']
@@ -94,17 +93,34 @@ function create () { // Create is called on game startup
           },
         ],
     }
-    x = coinStore[0].x;
-    y = coinStore[0].y;
+    let coinArrayPos = 0;
+    x = coinStore[coinArrayPos].x;
+    y = coinStore[coinArrayPos].y;
     console.log(map.getObjectLayer('coins')['objects'].length)
-      for (let coins = 0; coins < map.getObjectLayer('coins')['objects'].length; coins++) {
+    for (let coins = 1; coins < map.getObjectLayer('coins')['objects'].length; coins++) {
+      if (coinArrayPos == 0) {
+        coinSpr = this.add.sprite(0, 0, 'coinFrames');
+        coinSpr.scale = scale;
+        gridEngineConfig.characters.push({
+          id: `coin${x}#${y}`,
+          sprite: coinSpr,
+        startPosition: { x, y },
+    })
+      }
+      console.log("coinArrayPos: ", coinArrayPos);
+      coinArrayPos = coinArrayPos + 1;
+      console.log("coinArrayPos: ", coinArrayPos);
+      x = coinStore[coinArrayPos].x;
+      y = coinStore[coinArrayPos].y;
       coinSpr = this.add.sprite(0, 0, 'coinFrames');
       coinSpr.scale = scale;
-     gridEngineConfig.characters.push({
+      gridEngineConfig.characters.push({
         id: `coin${x}#${y}`,
         sprite: coinSpr,
         startPosition: { x, y },
-      })}
+      })
+    }
+      coinCounter = 0;
     
     console.log(gridEngineConfig)
     this.gridEngine.create(map, gridEngineConfig);
@@ -134,9 +150,11 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
     playerPos = this.gridEngine.getPosition('player');
     if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) {this.scene.restart();}
     if (playerPos.x == coin.x && playerPos.y == coin.y) {
+      if (coinSpr.visible) {this.gridEngine.removeCharacter(`coin${coin.x}#${coin.y}`)
+      coinCounter = coinCounter + 1;
+      console.log('Collected!', coinCounter);
+    }
       coinSpr.visible = false;
-      console.log('after ', this.gridEngine)
-      console.log('Collected!', coin);
     }
 }
 
