@@ -30,8 +30,8 @@ let coinSpr;
 let scale = 5;
 let keys;
 const coinStore = [
-  {x: 29, y: 13},
-  {x: 19, y: 13}
+  {x: 29, y: 13, visible: true}, // array 0, length 1
+  {x: 19, y: 13, visible: true} // array 1, length 2
 ]
 let coinCounter;
 let x;
@@ -96,22 +96,15 @@ function create () { // Create is called on game startup
     let coinArrayPos = 0;
     x = coinStore[coinArrayPos].x;
     y = coinStore[coinArrayPos].y;
-    console.log(map.getObjectLayer('coins')['objects'].length)
-    for (let coins = 1; coins < map.getObjectLayer('coins')['objects'].length; coins++) {
-      if (coinArrayPos == 0) {
-        coinSpr = this.add.sprite(0, 0, 'coinFrames');
-        coinSpr.scale = scale;
-        gridEngineConfig.characters.push({
-          id: `coin${x}#${y}`,
-          sprite: coinSpr,
-        startPosition: { x, y },
-    })
-      }
+    console.log(map.getObjectLayer('coins')['objects'])
+    for (let i = 0; i < map.getObjectLayer('coins')['objects'].length; i++) {
+      console.log("current iteration: ", i);
+      
       console.log("coinArrayPos: ", coinArrayPos);
-      coinArrayPos = coinArrayPos + 1;
+      coinArrayPos = i + 1;
       console.log("coinArrayPos: ", coinArrayPos);
-      x = coinStore[coinArrayPos].x;
-      y = coinStore[coinArrayPos].y;
+      x = coinStore[i].x;
+      y = coinStore[i].y;
       coinSpr = this.add.sprite(0, 0, 'coinFrames');
       coinSpr.scale = scale;
       gridEngineConfig.characters.push({
@@ -145,16 +138,22 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
     }
     let playerPos;
     let npc0Pos;
-    let coin = coinStore[0]
+    let coin = coinStore.find((coin) => coin.visible) ?? null
     npc0Pos = this.gridEngine.getPosition('npc0');
     playerPos = this.gridEngine.getPosition('player');
     if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) {this.scene.restart();}
-    if (playerPos.x == coin.x && playerPos.y == coin.y) {
-      if (coinSpr.visible) {this.gridEngine.removeCharacter(`coin${coin.x}#${coin.y}`)
+    if (coin != null && playerPos.x == coin.x && playerPos.y == coin.y) {
+      let coinTarget = this.gridEngine.getSprite(`coin${coin.x}#${coin.y}`)
+      console.log('coinTarget', coinTarget)
+      if (coinTarget.visible) {this.gridEngine.removeCharacter(`coin${coin.x}#${coin.y}`)
+      // coinSpr.visible = false;
+      coinTarget.visible = false;
       coinCounter = coinCounter + 1;
       console.log('Collected!', coinCounter);
     }
-      coinSpr.visible = false;
+    console.log('coin ', coinStore)
+    coin.visible = false;
+    console.log(this.gridEngine)
     }
 }
 
