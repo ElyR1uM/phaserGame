@@ -197,7 +197,7 @@ export declare enum CharacterShiftAction {
 }
 export declare class GridEngine {
     private scene;
-    private gridCharacters?;
+    public gridCharacters?;
     private gridTilemap?;
     private isCreatedInternal;
     private movementStopped$?;
