@@ -23,16 +23,16 @@
             "scaleInEditor": 5.5
         },
         "dbnF1.tmx": {
-            "scale": 8,
+            "scale": 5.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 601.9375,
-                "y": 147.625
+                "x": 368.4545454545455,
+                "y": 227.8181818181818
             }
         },
         "dbnF1.tmx#Planks": {
             "dynamicWrapping": false,
-            "scaleInDock": 4,
+            "scaleInDock": 5.5,
             "scaleInEditor": 8
         },
         "dbnF1.tmx#Player": {
