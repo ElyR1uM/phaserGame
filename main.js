@@ -26,14 +26,13 @@ const config = {
 //let cursors;
 let playerChar;
 let npcSprite;
-let coinSpr;
 let scale = 5;
 let keys;
 const coinStore = [
   {x: 29, y: 13, visible: true}, // array 0, length 1
   {x: 19, y: 13, visible: true} // array 1, length 2
 ]
-let coinCounter;
+let counterText;
 let x;
 let y;
 let map;
@@ -52,7 +51,7 @@ function create () { // Create is called on game startup
     // Variables
 
     keys = this.input.keyboard.addKeys('W, A, S, D, E, R');
-    
+    //const UICam = this.cameras.add(0, 0, 2560, 1440);
     
     // Create all visible stuff (Map, Player, etc)
     map = this.make.tilemap({ key: 'map' });
@@ -96,16 +95,11 @@ function create () { // Create is called on game startup
     let coinArrayPos = 0;
     x = coinStore[coinArrayPos].x;
     y = coinStore[coinArrayPos].y;
-    console.log(map.getObjectLayer('coins')['objects'])
     for (let i = 0; i < map.getObjectLayer('coins')['objects'].length; i++) {
-      console.log("current iteration: ", i);
-      
-      console.log("coinArrayPos: ", coinArrayPos);
       coinArrayPos = i + 1;
-      console.log("coinArrayPos: ", coinArrayPos);
       x = coinStore[i].x;
       y = coinStore[i].y;
-      coinSpr = this.add.sprite(0, 0, 'coinFrames');
+      let coinSpr = this.add.sprite(0, 0, 'coinFrames');
       coinSpr.scale = scale;
       gridEngineConfig.characters.push({
         id: `coin${x}#${y}`,
@@ -113,14 +107,17 @@ function create () { // Create is called on game startup
         startPosition: { x, y },
       })
     }
-      coinCounter = 0;
-    
-    console.log(gridEngineConfig)
+      this.data.set('coins', 0)
+      counterText = this.add.text(0, 0, ['Coins collected: ' + this.data.get('coins') + '/2'])
+      this.cameras.main.ignore(counterText)
     this.gridEngine.create(map, gridEngineConfig);
-    
+    /* UICam.ignore([playerChar, map, keys, x, y, coinArrayPos, npcSprite, Planks, gridEngineConfig])
+    UICam.startFollow(playerChar, true);
+    UICam.setFollowOffset(-playerChar.width, -playerChar.height); */
 }
 
 function update () { // Update is called once per frame, wonder if fixedUpdate is also a thing here
+    
     if (keys.A.isDown) {
       this.gridEngine.move('player', 'left');
     } else if (keys.D.isDown) {
@@ -138,23 +135,21 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
     }
     let playerPos;
     let npc0Pos;
-    let coin = coinStore.find((coin) => coin.visible) ?? null
-    npc0Pos = this.gridEngine.getPosition('npc0');
     playerPos = this.gridEngine.getPosition('player');
-    if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) {this.scene.restart();}
+    npc0Pos = this.gridEngine.getPosition('npc0');
+    let coin = coinStore.find((coin) => coin.visible && coin.x == playerPos.x && coin.y == playerPos.y) ?? null //Add the ? null to avoid the if function to 
+    if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) this.scene.restart();
     if (coin != null && playerPos.x == coin.x && playerPos.y == coin.y) {
       let coinTarget = this.gridEngine.getSprite(`coin${coin.x}#${coin.y}`)
-      console.log('coinTarget', coinTarget)
       if (coinTarget.visible) {this.gridEngine.removeCharacter(`coin${coin.x}#${coin.y}`)
-      // coinSpr.visible = false;
       coinTarget.visible = false;
-      coinCounter = coinCounter + 1;
-      console.log('Collected!', coinCounter);
+      this.data.values.coins += 1
+      counterText.setText(['Coins collected: ', this.data.get('coins'), '/2'])
+      console.log(this.data.get('coins'));
     }
-    console.log('coin ', coinStore)
     coin.visible = false;
-    console.log(this.gridEngine)
     }
+    //if (coinCounter == 2) console.log('you won!')
 }
 
 let game = new Phaser.Game(config);
