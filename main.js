@@ -48,7 +48,7 @@ function preload () { // Preload is called before startup
 function create () { // Create is called on game startup
     // Variables
     keys = this.input.keyboard.addKeys('W, A, S, D, E, R');
-    const UICam = this.cameras.add(0, 0, 160, 180);
+    const counterCam = this.cameras.add(0, 0, 160, 180);
     const mainCam = this.cameras.main;
     
     this.anims.create({
@@ -121,9 +121,8 @@ function create () { // Create is called on game startup
     }
       this.data.set('coins', 0)
       counterText = this.add.text(0, 0, ['Coins collected: ', this.data.get('coins') + '/2',  'F11 recommended'])
-    mainCam.ignore(counterText, UICam);
+    mainCam.ignore(counterText);
     this.gridEngine.create(map, gridEngineConfig);
-    UICam.ignore([playerChar, map, keys, x, y, coinArrayPos, npcSprite, Planks, gridEngineConfig, mainCam, config, scale, coinStore]);
     console.log(coinStore);
     console.log(gridEngineConfig)
 }
@@ -159,5 +158,5 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
     }
     coin.visible = false;
     }
-    //if (this.data.coins == 2) restart()
+    if (this.data.coins == 2) this.scene.restart()
 }
