@@ -7,7 +7,7 @@ const config = {
     scene: {
         preload: preload,
         create: create,
-        update: update
+        update: update,
     },
     plugins: {
         scene: [
@@ -23,15 +23,13 @@ const config = {
     }
 }
 
+let game = new Phaser.Game(config);
 //let cursors;
 let playerChar;
 let npcSprite;
 let scale = 5;
 let keys;
-const coinStore = [
-  {x: 29, y: 13, visible: true}, // array 0, length 1
-  {x: 19, y: 13, visible: true} // array 1, length 2
-]
+let coinStore = [];
 let counterText;
 let x;
 let y;
@@ -49,10 +47,19 @@ function preload () { // Preload is called before startup
 
 function create () { // Create is called on game startup
     // Variables
-
     keys = this.input.keyboard.addKeys('W, A, S, D, E, R');
-    //const UICam = this.cameras.add(0, 0, 2560, 1440);
+    const UICam = this.cameras.add(0, 0, 160, 180);
+    const mainCam = this.cameras.main;
     
+    this.anims.create({
+      key: 'coinSpin',
+      frames: this.anims.generateFrameNumbers('coinFrames', {
+        start: 0,
+        end: 12,
+      }),
+      frameRate: 12,
+      repeat: -1,
+    });
     // Create all visible stuff (Map, Player, etc)
     map = this.make.tilemap({ key: 'map' });
     const Planks = map.addTilesetImage('Planks', 'plankTiles');
@@ -62,8 +69,8 @@ function create () { // Create is called on game startup
     }
     playerChar = this.add.sprite(0, 0, 'playerFrames').setScale(scale);
     playerChar.setDepth(2);
-    this.cameras.main.startFollow(playerChar, true);
-    this.cameras.main.setFollowOffset(-playerChar.width, -playerChar.height);
+    mainCam.startFollow(playerChar, true);
+    mainCam.setFollowOffset(-playerChar.width, -playerChar.height);
     npcSprite = this.add.sprite(0, 0, "npcFrames").setScale(scale);
     //playerChar.setColliderWorldBounds(true);
     const entities = {
@@ -92,6 +99,10 @@ function create () { // Create is called on game startup
           },
         ],
     }
+    coinStore = [
+      {x: 29, y: 13, visible: true},
+      {x: 19, y: 13, visible: true}]
+
     let coinArrayPos = 0;
     x = coinStore[coinArrayPos].x;
     y = coinStore[coinArrayPos].y;
@@ -100,6 +111,7 @@ function create () { // Create is called on game startup
       x = coinStore[i].x;
       y = coinStore[i].y;
       let coinSpr = this.add.sprite(0, 0, 'coinFrames');
+      coinSpr.anims.play('coinSpin', true)
       coinSpr.scale = scale;
       gridEngineConfig.characters.push({
         id: `coin${x}#${y}`,
@@ -108,16 +120,15 @@ function create () { // Create is called on game startup
       })
     }
       this.data.set('coins', 0)
-      counterText = this.add.text(0, 0, ['Coins collected: ' + this.data.get('coins') + '/2'])
-      this.cameras.main.ignore(counterText)
+      counterText = this.add.text(0, 0, ['Coins collected: ', this.data.get('coins') + '/2',  'F11 recommended'])
+    mainCam.ignore(counterText, UICam);
     this.gridEngine.create(map, gridEngineConfig);
-    /* UICam.ignore([playerChar, map, keys, x, y, coinArrayPos, npcSprite, Planks, gridEngineConfig])
-    UICam.startFollow(playerChar, true);
-    UICam.setFollowOffset(-playerChar.width, -playerChar.height); */
+    UICam.ignore([playerChar, map, keys, x, y, coinArrayPos, npcSprite, Planks, gridEngineConfig, mainCam, config, scale, coinStore]);
+    console.log(coinStore);
+    console.log(gridEngineConfig)
 }
 
 function update () { // Update is called once per frame, wonder if fixedUpdate is also a thing here
-    
     if (keys.A.isDown) {
       this.gridEngine.move('player', 'left');
     } else if (keys.D.isDown) {
@@ -131,25 +142,22 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
         this.gridEngine.follow('npc0', 'player', -1, true);
     }
     if (keys.R.isDown) {
-      this.scene.restart();
+      this.scene.restart()
     }
     let playerPos;
     let npc0Pos;
     playerPos = this.gridEngine.getPosition('player');
     npc0Pos = this.gridEngine.getPosition('npc0');
     let coin = coinStore.find((coin) => coin.visible && coin.x == playerPos.x && coin.y == playerPos.y) ?? null //Add the ? null to avoid the if function to 
-    if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) this.scene.restart();
+    if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) this.scene.restart()
     if (coin != null && playerPos.x == coin.x && playerPos.y == coin.y) {
       let coinTarget = this.gridEngine.getSprite(`coin${coin.x}#${coin.y}`)
       if (coinTarget.visible) {this.gridEngine.removeCharacter(`coin${coin.x}#${coin.y}`)
       coinTarget.visible = false;
       this.data.values.coins += 1
-      counterText.setText(['Coins collected: ', this.data.get('coins'), '/2'])
-      console.log(this.data.get('coins'));
+      counterText.setText(['Coins collected: ', this.data.get('coins') + '/2', 'F11 recommended'])
     }
     coin.visible = false;
     }
-    //if (coinCounter == 2) console.log('you won!')
+    //if (this.data.coins == 2) restart()
 }
-
-let game = new Phaser.Game(config);
