@@ -41,6 +41,7 @@ function preload () { // Preload is called before startup
     this.load.image('dialogue', 'assets/exported-images/dialogueBox0.png')
     this.load.image('plankTiles', 'assets/exported-images/plankTiles.png') //Load resources for the tilemap JSON (Definetly load before dbnF1.json)
     this.load.audio('coinCollect', 'assets/sfx/coinCollect.wav')
+    this.load.audio('soundtrack', 'assets/sfx/base.wav')
     this.load.spritesheet('playerFrames', 'assets/exported-images/player.png', {frameWidth: 16, frameHeight: 16})
     this.load.spritesheet('npcFrames', 'assets/exported-images/npc0.png', {frameWidth: 16, frameHeight: 16})
     this.load.spritesheet('coinFrames', 'assets/exported-images/coin.png', {frameWidth: 16, frameHeight: 16})
@@ -49,7 +50,7 @@ function preload () { // Preload is called before startup
 
 function create () { // Create is called on game startup
     // Variables
-    keys = this.input.keyboard.addKeys('W, A, S, D, E, R')
+    keys = this.input.keyboard.addKeys('W, A, S, D, R')
     const counterCam = this.cameras.add(0, 0, 160, 180)
     const mainCam = this.cameras.main
     const timerCam = this.cameras.add(780, 0, 160, 90)
@@ -104,8 +105,16 @@ function create () { // Create is called on game startup
     }
     coinStore = [
       {x: 29, y: 13, visible: true},
-      {x: 19, y: 13, visible: true}]
-
+      {x: 4, y: 1, visible: true},
+      {x: 7, y: 18, visible: true},
+      {x: 3, y: 18, visible: true},
+      {x: 10, y: 19, visible: true},
+      {x: 12, y: 3, visible: true},
+      {x: 14, y: 11, visible: true},
+      {x: 15, y: 16, visible: true},
+      {x: 17, y: 9, visible: true}
+    ]
+    console.log(map.getObjectLayer('coins')['objects'].length);
     let coinArrayPos = 0;
     x = coinStore[coinArrayPos].x
     y = coinStore[coinArrayPos].y
@@ -127,6 +136,9 @@ function create () { // Create is called on game startup
     mainCam.ignore(counterText, )
     timerCam.ignore (counterText)
     this.gridEngine.create(map, gridEngineConfig)
+    this.gridEngine.follow('npc0', 'player', -1, true)
+    let bgm = this.sound.play('soundtrack', {volume: 0.5, loop: true})
+    
 }
 
 function update () { // Update is called once per frame, wonder if fixedUpdate is also a thing here
@@ -139,10 +151,8 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
     } else if (keys.S.isDown) {
       this.gridEngine.move('player', 'down')
     }
-    if (keys.E.isDown) {
-        this.gridEngine.follow('npc0', 'player', -1, true)
-    }
     if (keys.R.isDown) {
+      this.sound.removeAll()
       this.scene.restart()
     }
     let playerPos
@@ -150,14 +160,19 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
     playerPos = this.gridEngine.getPosition('player')
     npc0Pos = this.gridEngine.getPosition('npc0')
     let coin = coinStore.find((coin) => coin.visible && coin.x == playerPos.x && coin.y == playerPos.y) ?? null //Add the ? null to avoid the if function to 
-    if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) this.scene.restart()
+    if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) {
+      this.sound.removeAll()
+      this.scene.restart()
+    }
     if (coin != null && playerPos.x == coin.x && playerPos.y == coin.y) {
       let coinTarget = this.gridEngine.getSprite(`coin${coin.x}#${coin.y}`)
       if (coinTarget.visible) {this.gridEngine.removeCharacter(`coin${coin.x}#${coin.y}`)
       coinTarget.visible = false
       this.data.values.coins += 1
       counterText.setText(['Coins collected: ', this.data.get('coins') + '/2', 'F11 recommended \n You only have 3 \n Minutes. \n Good Luck!'])
-      if (this.data.values.coins == map.getObjectLayer('coins')['objects'].length) this.scene.restart() 
+      if (this.data.values.coins == map.getObjectLayer('coins')['objects'].length) {
+        this.sound.removeAll()
+        this.scene.restart() }
     }
     coin.visible = false
     this.sound.play('coinCollect')
@@ -168,7 +183,10 @@ function timer() {
   if (timeLeft >= 0) {
     timeLeft -= 1
   }
-  if (timeLeft <= 0) this.scene.restart() // Added this here aswell to simply enhance performance by reducing all the checks for variables done every frame.
+  if (timeLeft <= 0) {
+    this.sound.removeAll()
+    this.scene.restart() // Added this here aswell to simply enhance performance by reducing all the checks for variables done every frame.
+  }
 }
 
 setInterval(function() { 
