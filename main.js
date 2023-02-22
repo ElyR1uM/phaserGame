@@ -103,16 +103,40 @@ function create () { // Create is called on game startup
           },
         ],
     }
-    coinStore = [
+    coinStore = [ //if you want to add your own coins, I added a snippet file (.vscode\phaserSnippets.code-snippets) with a snippet that adds "visible: true" when you type 'vb'
+     //so it won't be as tedious to do
+      {x: 3, y: 1, visible: true}, 
+      {x: 6, y: 17, visible: true},
+      {x: 2, y: 17, visible: true},
+      {x: 9, y: 18, visible: true},
+      {x: 11, y: 3, visible: true},
+      {x: 13, y: 11, visible: true},
+      {x: 14, y: 16, visible: true},
+      {x: 16, y: 9, visible: true},
+      {x: 17, y: 3, visible: true},
+      {x: 19, y: 10, visible: true},
+      {x: 23, y: 2, visible: true},
+      {x: 24, y: 17, visible: true},
+      {x: 28, y: 3, visible: true},
+      {x: 28, y: 20, visible: true},
       {x: 29, y: 13, visible: true},
-      {x: 4, y: 1, visible: true},
-      {x: 7, y: 18, visible: true},
-      {x: 3, y: 18, visible: true},
-      {x: 10, y: 19, visible: true},
-      {x: 12, y: 3, visible: true},
-      {x: 14, y: 11, visible: true},
-      {x: 15, y: 16, visible: true},
-      {x: 17, y: 9, visible: true}
+      {x: 35, y: 2, visible: true},
+      {x: 41, y: 3, visible: true},
+      {x: 41, y: 7, visible: true},
+      {x: 42, y: 21, visible: true},
+      {x: 42, y: 23, visible: true},
+      {x: 43, y: 26, visible: true},
+      {x: 45, y: 7, visible: true},
+      {x: 45, y: 12, visible: true},
+      {x: 50, y: 26, visible: true},
+      {x: 51, y: 9, visible: true},
+      {x: 53, y: 26, visible: true},
+      {x: 54, y: 11, visible: true},
+      {x: 59, y: 13, visible: true},
+      {x: 60, y: 26, visible: true},
+      {x: 63, y: 16, visible: true},
+      {x: 65, y: 23, visible: true},
+      {x: 69, y: 19, visible: true}
     ]
     console.log(map.getObjectLayer('coins')['objects'].length);
     let coinArrayPos = 0;
@@ -142,24 +166,24 @@ function create () { // Create is called on game startup
 }
 
 function update () { // Update is called once per frame, wonder if fixedUpdate is also a thing here
-    if (keys.A.isDown) {
-      this.gridEngine.move('player', 'left')
-    } else if (keys.D.isDown) {
-      this.gridEngine.move('player', 'right')
-    } else if (keys.W.isDown) {
-      this.gridEngine.move('player', 'up')
-    } else if (keys.S.isDown) {
-      this.gridEngine.move('player', 'down')
-    }
-    if (keys.R.isDown) {
-      this.sound.removeAll()
-      this.scene.restart()
-    }
-    let playerPos
+  if (keys.A.isDown) {
+    this.gridEngine.move('player', 'left')
+  } else if (keys.D.isDown) {
+    this.gridEngine.move('player', 'right')
+  } else if (keys.W.isDown) {
+    this.gridEngine.move('player', 'up')
+  } else if (keys.S.isDown) {
+    this.gridEngine.move('player', 'down')
+  }
+  if (keys.R.isDown) {
+    this.sound.removeAll()
+    this.scene.restart()
+  }
+  let playerPos
     let npc0Pos
     playerPos = this.gridEngine.getPosition('player')
     npc0Pos = this.gridEngine.getPosition('npc0')
-    let coin = coinStore.find((coin) => coin.visible && coin.x == playerPos.x && coin.y == playerPos.y) ?? null //Add the ? null to avoid the if function to 
+    let coin = coinStore.find((coin) => coin.visible && coin.x == playerPos.x && coin.y == playerPos.y) ?? null
     if (playerPos.x == npc0Pos.x && playerPos.y == npc0Pos.y) {
       this.sound.removeAll()
       this.scene.restart()
@@ -173,14 +197,14 @@ function update () { // Update is called once per frame, wonder if fixedUpdate i
       if (this.data.values.coins == map.getObjectLayer('coins')['objects'].length) {
         this.sound.removeAll()
         this.scene.restart() }
+      }
+      coin.visible = false
+      this.sound.play('coinCollect')
     }
-    coin.visible = false
-    this.sound.play('coinCollect')
-    }
-}
-
-function timer() {
-  if (timeLeft >= 0) {
+  }
+  
+  function timer() {
+    if (timeLeft >= 0) {
     timeLeft -= 1
   }
   if (timeLeft <= 0) {
